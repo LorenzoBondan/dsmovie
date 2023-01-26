@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,18 +24,23 @@ public class Movie {
 	private Integer count;
 	private String image;
 	
+	@ManyToOne
+	@JoinColumn(name = "genre_id")
+	private Genre genre;
+	
 	@OneToMany(mappedBy = "id.movie")
 	private Set<Score> scores = new HashSet<>();
 	
 	public Movie() {
 	}
 
-	public Movie(Long id, String title, Double score, Integer count, String image) {
+	public Movie(Long id, String title, Double score, Integer count, String image, Genre genre) {
 		this.id = id;
 		this.title = title;
 		this.score = score;
 		this.count = count;
 		this.image = image;
+		this.genre = genre;
 	}
 
 	public Long getId() {
@@ -79,4 +86,14 @@ public class Movie {
 	public Set<Score> getScores() {
 		return scores;
 	}
+
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+	
+	
 }
